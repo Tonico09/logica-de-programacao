@@ -25,6 +25,7 @@ int main()
 	int B = 0; 
 	int result1 = 0;
 	
+
 	do{
 	printf("---------------------------------------\n");
 	printf("|Bem vindo a Calculadora 1.0..........|\n");
@@ -125,8 +126,8 @@ int main()
 				{
 					printf("Nao existe Fatorial Duplo para numeros negativos\n");
 				}
-				result1 = FatorialDuplo(A);
-				printf("O resultado e: %d\n",result1);
+				unsigned long long resultLong = FatorialSimples(A);
+				printf("O resultado e: %d\n",resultLong);
 			break;
 			case 10:
 				printf("Informe os numeros que deseja realizar a operacao:\n");
@@ -134,8 +135,12 @@ int main()
 				if(A < 0)
 				{
 					printf("Fatorial nao existe para numeros negativos\n");
-				result1 = FatorialSimples(A);
+				}
+				else 
+				{
+					result1 = FatorialSimples(A);
 				printf("O resultado e: %d\n",result1);
+				}
 			break;
 			case 11:
 				printf("Informe os numeros que deseja realizar a operacao:\n");
@@ -211,7 +216,7 @@ double RaizQuadrada(double x)
 {
 	double raiz = 0.0;
 	double novo_x = 0.0;
-	while 
+	while ((novo_x - raiz > 0.00001) || (raiz - novo_x > 0.00001))
 	{
 	raiz = 0.5 * ( novo_x + x / novo_x);
 	novo_x = raiz;
@@ -248,20 +253,20 @@ unsigned long long FatorialSimples(int x)
     }
     return(result);
 }
-double EquacaoSgrau(double x, double y, double z)
+void EquacaoSgrau(double x, double y, double z)
 {
 	if(x == 0)
 	{
 		printf("Isso nao eh uma equacao do segundo grau\n");
 		return;
 	}
-	double delta = Potenciacao(y * y) - 4 * x * z;
+	double delta = Potenciacao(y, 2) - 4 * x * z;
 	if(delta <= 0)
 	{
 		printf("Nao existem raizes reais\n");
 	}
 	else if
-		(delta = 0) 
+		(delta == 0) 
 		{
         double raiz = -y / (2*x);
         printf("Raiz unica: %.5lf\n", raiz);
@@ -270,7 +275,7 @@ double EquacaoSgrau(double x, double y, double z)
 	{
 	double raizum = ((-1*y) + RaizQuadrada(delta)) / (2*x);
 	double raizdois = ((-1*y) - RaizQuadrada(delta)) / (2*x);
-	}
 	printf("Raizes reais:\n raizum = %.5lf\n raizdois = %.5lf\n",raizum, raizdois);
 	}
+
 }
