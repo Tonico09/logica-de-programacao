@@ -229,10 +229,11 @@ double RaizQuadrada(double x)
 		printf("Nao existe raiz quadrada de numero negativo\n");
 		return (-1);
 	}
-	
+	for (int i = 0; i < 100; i++)
+	{
 	raiz1 = 0.5 * ( novo_x + x / novo_x);
 	novo_x = raiz1;
-	
+	}
 	return(raiz1);
 }
 int FatorialDuplo(int x) 
