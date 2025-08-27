@@ -11,7 +11,7 @@ int Mmc(int x, int y);
 double RaizQuadrada(double x);
 int FatorialDuplo(int x);
 unsigned long long FatorialSimples(int x);
-double EquacaoSgrau(double x, double y, double z);
+void EquacaoSgrau(double x, double y, double z);
 
 int main()
 {
@@ -24,6 +24,8 @@ int main()
 	int A = 0; 
 	int B = 0; 
 	int result1 = 0;
+	int resultLong = 0;
+	double raiz = 0.0;
 	
 
 	do{
@@ -45,7 +47,11 @@ int main()
 	printf("| 11 - Equacao do Segundo Grau........|\n");
 	printf("---------------------------------------\n");
 		
-		scanf("%d",&opcao);
+		if (scanf("%d",&opcao) != 1)
+		{
+			printf("Numero digitado é invalido\n");
+			continue;
+		}
 
 		
 		switch(opcao)
@@ -114,23 +120,25 @@ int main()
 				printf("O resultado e: %d\n",result1);
 			break;
 			case 8:
-				printf("Informe os numeros que deseja realizar a operacao:\n");
+				printf("Informe o numero que deseja realizar a operacao:\n");
 				scanf("%d",&A);
-				result1 = RaizQuadrada(A);
-				printf("O resultado e: %d\n",result1);
+				raiz = RaizQuadrada(A);
+				if (raiz != -1)
+				printf("O resultado e: %.5lf\n",raiz);
 			break;
 			case 9:
-				printf("Informe os numeros que deseja realizar a operacao:\n");
+				printf("Informe o numero que deseja realizar a operacao:\n");
 				scanf("%d",&A);
 				if(A < 0)
 				{
 					printf("Nao existe Fatorial Duplo para numeros negativos\n");
+					break;
 				}
-				unsigned long long resultLong = FatorialSimples(A);
+				resultLong = FatorialDuplo(A);
 				printf("O resultado e: %d\n",resultLong);
 			break;
 			case 10:
-				printf("Informe os numeros que deseja realizar a operacao:\n");
+				printf("Informe o numero que deseja realizar a operacao:\n");
 				scanf("%d",&A);
 				if(A < 0)
 				{
@@ -138,17 +146,17 @@ int main()
 				}
 				else 
 				{
-					result1 = FatorialSimples(A);
-				printf("O resultado e: %d\n",result1);
+				unsigned long long fat = FatorialSimples(A);
+				printf("O resultado e: %llu\n",fat);
 				}
 			break;
 			case 11:
 				printf("Informe os numeros que deseja realizar a operacao:\n");
 				scanf("%lf %lf %lf", &a, &b, &c);
-				result1 = EquacaoSgrau(a, b, c);
+				EquacaoSgrau(a, b, c);
 			break;
 			case 3:
-			printf("Saindo da Calculadora\n");
+			printf("Saindo da Calculadora. . .\n");
 			break;
 			
 			default:
@@ -214,25 +222,22 @@ int Mmc(int x, int y)
 }
 double RaizQuadrada(double x)
 {
-	double raiz = 0.0;
-	double novo_x = 0.0;
-	while ((novo_x - raiz > 0.00001) || (raiz - novo_x > 0.00001))
+	double raiz1 = x;
+	double novo_x = x / 2.0;
+	if (x < 0)
 	{
-	raiz = 0.5 * ( novo_x + x / novo_x);
-	novo_x = raiz;
+		printf("Nao existe raiz quadrada de numero negativo\n");
+		return (-1);
 	}
-	return(raiz);
+	
+	raiz1 = 0.5 * ( novo_x + x / novo_x);
+	novo_x = raiz1;
+	
+	return(raiz1);
 }
 int FatorialDuplo(int x) 
 {
   int result = 1;
-  if (x % 2 == 0) 
-  { 
-    for (int i = x; i > 0; i -= 2) 
-	{
-      result *= i;
-    }
-  } else 
   {
     for (int i = x; i > 0; i -= 2) 
 	{
@@ -261,7 +266,7 @@ void EquacaoSgrau(double x, double y, double z)
 		return;
 	}
 	double delta = Potenciacao(y, 2) - 4 * x * z;
-	if(delta <= 0)
+	if(delta < 0)
 	{
 		printf("Nao existem raizes reais\n");
 	}
