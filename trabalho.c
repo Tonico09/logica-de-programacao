@@ -144,6 +144,11 @@ int main()
 				{
 					printf("Fatorial nao existe para numeros negativos\n");
 				}
+				else if
+				(A == 0)
+				{
+					printf("Fatorial de 0 é 1\n");
+				}
 				else 
 				{
 				unsigned long long fat = FatorialSimples(A);
