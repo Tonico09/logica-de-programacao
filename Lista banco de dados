@@ -1,0 +1,15 @@
+Lista todos os bancos de dados
+
+ show databases;
+ 
+ Criar um novo banco de dados;
+  - create database name;
+  - show tables; (ver todas as tabelas)
+  - drop database name (apagar/destruir qualquer coisa);
+  - create table name(
+  nome varchar (255),
+  telefone varchar (16)  );(criar tabela)
+  - desc name;
+  - insert into alunos(nome, telefone)
+  values("Antonio de Lima", "46 976069168"); (novo registro)
+  - select * from alunos; (seleciona todos os registros)
