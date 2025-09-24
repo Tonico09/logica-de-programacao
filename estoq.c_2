@@ -19,15 +19,16 @@ int main()
 	int codigo = 0;
 	int quant = 0;
 	int i = 0;
-	
-	printf("_________________________\n");
-	printf("|1- Ver estoque.........|\n");
-	printf("|2- Cadastrar Produto...|\n");
-	printf("|3- Escolhe Produto.....|\n");
-	printf("|4- Sair................|\n");
-	printf("|_______________________|\n");
-	
 	do{
+	
+	printf("____________________________\n");
+	printf("|1- Ver estoque............|\n");
+	printf("|2- Cadastrar Produto......|\n");
+	printf("|3- Escolhe Produto........|\n");
+	printf("|4- Valor Total de estoque.|\n");
+	printf("|5- Sair...................|\n");
+	printf("|__________________________|\n");
+	
 	scanf("%d", &escolha);
 	switch(escolha)
 	{
@@ -46,7 +47,7 @@ int main()
 					printf("|%s| %d| %d| %.2lf|\n", p[i].nome, p[i].codigo, p[i].quant, p[i].preco);
 					i++;
 				}
-				printf("|Sair|   08		|\n");
+				printf("|Sair|   04		|\n");
 				printf("|_________________________________|\n");
 			}
 			fclose(estoque);
@@ -74,42 +75,48 @@ int main()
 			printf("Deseja cadastrar mais algum produto?\n");
 			printf("Se deseja digite o codigo para cadastrar, se nao digite outro\n");
 			printf("Abaixo vai estar a tabela para relembrar os codigos\n");
-			printf("_________________________\n");
-			printf("|1- Ver estoque.........|\n");
-			printf("|2- Cadastrar Produto...|\n");
-			printf("|3- Escolhe Produto.....|\n");
-			printf("|4- Sair................|\n");
-			printf("|_______________________|\n");
 		break;
 		
 		case 3:
-		do{
-			for(int i = 0; i < quant; i++)
-			{
-			printf("Digite o codigo do produto desejado\n");
-			scanf("%d",&codigo);
-			switch(codigo)
-			{
-			valor += p[i].preco * quant;
-			}
-				default:
-					printf("O codigo digitado nao existe, tente outro codigo que esta na tabela\n");
-			}
-	
-		  }while(codigo != 5);
-		}
-		}while(codigo != 4);
+			estoque = fopen("estoque.txt", "r");
+				printf("Digite o codigo do produto desejado\n");
+				scanf("%d",&codigo);
+				int i = 0;
+				while(fscanf(estoque, "%s\n%d\n%d\n%lf", p[i].nome, &p[i].codigo, &p[i].quant, &p[i].preco) != EOF)
+				{
+					if(codigo == p[i].codigo)
+					{
+						valor += (double) p[i].preco * p[i].quant;
+						printf("O valor total deu %.2lf\n", valor);
+												
+					}
+					i++;
+				}
+				
+			fclose(estoque);
+			break;
+		case 4:
+			
+		break;
+		case 5:
+			printf("\n");
+		break;
+		default:
+			printf("O codigo digitado nao existe, tente outro codigo que esta na tabela\n");
+	}
+	}while(escolha != 5);
 
-	printf("O valor total deu %.2lf, qual sera a forma de pagamento?\n");
+	printf("O valor total deu %.2lf, qual sera a forma de pagamento?\n", valor);
 	printf("Opcoes\n");
 	printf("1- Pix\n");
 	printf("2- Debito\n");
 	printf("3- Credito\n");
 	printf("4- Dinhero\n");
+	printf("5- Sair\n");
 	
-	scanf("%d", &pagamento);
-	
-	do{
+	do
+	{
+		scanf("%d", &pagamento);
 		switch(pagamento)
 		{
 			case 1: 
@@ -125,19 +132,21 @@ int main()
 			case 3:
 				printf("Aproxime seu cartao ou insira na maquininha\n");
 				printf("Processando...\n");
-				printf("Cartao recusado, tem que pagar a fatura do cartao! KKK\n");
+				printf("Cartao recusado, tem que pagar a fatura do cartao!!! KKKKKKKKK\n");
 			break;
 			case 4:
 				printf("Processando cedulas e moedas...\n");
 				printf("Pagamento realizado com sucesso, obrigado!\n");
 			break;
-		
+			case 5:
+				printf("Saindo...\n");
+			break;
 			default:
 			printf("O numero digitado nao corresponde a nenhuma das opcoes, selecione a correta!\n");
 		}
-	}while(codigo != 5);
+	}while(pagamento != 5);
 
-		printf("Obrigado pela preferencia!\nVolte sempre!\n");
+	printf("Obrigado pela preferencia!\nVolte sempre!\n");
 	
 	return(0);
 }
