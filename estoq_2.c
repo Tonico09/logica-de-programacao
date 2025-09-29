@@ -26,7 +26,8 @@ int main()
 	printf("|2- Cadastrar Produto......|\n");
 	printf("|3- Escolhe Produto........|\n");
 	printf("|4- Valor Total de estoque.|\n");
-	printf("|5- Sair...................|\n");
+	printf("|5- Adicionar quantidade...|\n");
+	printf("|6- Sair...................|\n");
 	printf("|__________________________|\n");
 	
 	scanf("%d", &escolha);
@@ -42,12 +43,11 @@ int main()
 			{
 				printf("___________________________________\n");
 				printf("|Produto| Codigo| Quantidade|Preco|\n");
-				while(fscanf(estoque,"%s\n%d\n%d\n%lf\n", p[i].nome, &p[i].codigo, &p[i].quant, &p[i].preco) != EOF)
+				while(fscanf(estoque,"%[^\n]\n%d\n%d\n%lf\n", p[i].nome, &p[i].codigo, &p[i].quant, &p[i].preco) != EOF)
 				{
 					printf("|%s| %d| %d| %.2lf|\n", p[i].nome, p[i].codigo, p[i].quant, p[i].preco);
 					i++;
 				}
-				printf("|Sair|   04		|\n");
 				printf("|_________________________________|\n");
 			}
 			fclose(estoque);
@@ -68,7 +68,7 @@ int main()
 				printf("Agora o preco\n");
 				scanf("%lf", &p[i].preco);
 				
-				fprintf(estoque, " %s\n%d\n%d\n%.2lf\n", p[i].nome, p[i].codigo, p[i].quant, p[i].preco);
+				fprintf(estoque, "%s\n%d\n%d\n%.2lf\n", p[i].nome, p[i].codigo, p[i].quant, p[i].preco);
 			}
 			fclose(estoque);
 			
@@ -82,30 +82,76 @@ int main()
 				printf("Digite o codigo do produto desejado\n");
 				scanf("%d",&codigo);
 				int i = 0;
-				while(fscanf(estoque, "%s\n%d\n%d\n%lf", p[i].nome, &p[i].codigo, &p[i].quant, &p[i].preco) != EOF)
+				valor = 0.0;
+				while(fscanf(estoque, " %[^\n]\n%d\n%d\n%lf", p[i].nome, &p[i].codigo, &p[i].quant, &p[i].preco) != EOF)
 				{
 					if(codigo == p[i].codigo)
 					{
 						valor += (double) p[i].preco * p[i].quant;
+						printf("O produto pesquisado foi (%s), a quantidade dele eh (%d) o preco dele eh (%.2lf)\n", p[i].nome, p[i].quant, p[i].preco);
 						printf("O valor total deu %.2lf\n", valor);
-												
 					}
 					i++;
 				}
 				
 			fclose(estoque);
-			break;
+		break;
+			
 		case 4:
+			estoque = fopen("estoque.txt", "r");
+			if(estoque != NULL)
+			{
+				i = 0;
+				valor = 0.0;
+				while(fscanf(estoque, "%s\n%d\n%d\n%lf", p[i].nome, &p[i].codigo, &p[i].quant, &p[i].preco) != EOF)
+				{
+					valor += (double) p[i].preco * p[i].quant;
+					i++;
+				}
+				printf("O valor total deu %.2lf\n", valor);
+				fclose(estoque);
+			}
+			else
+			{
+				printf("erro!!!\n");
+			}
 			
 		break;
+		
 		case 5:
-			printf("\n");
+			i = 0;
+			estoque = fopen("estoque.txt", "r");
+			printf("Qual produto deseja alterar a quantidade?, digite o codigo do produto\n");
+			scanf("%d", &codigo);
+			printf("Digite a quantidade desejada\n");
+			scanf("%d", &quant);
+				while(fscanf(estoque, "%s\n%d\n%d\n%lf", p[i].nome, &p[i].codigo, &p[i].quant, &p[i].preco) != EOF)
+				{	
+					if(codigo == p[i].codigo)
+					{
+						p[i].quant = quant  ;
+					}
+					i++;
+				}
+			printf("Quantidade atualizada com sucesso!\n");
+			fclose(estoque);
+			estoque = fopen("estoque.txt", "w");
+			for( int h = 0; h < i; h++)
+			{
+				fprintf(estoque, "%s\n%d\n%d\n%.2lf\n", p[h].nome, p[h].codigo, p[h].quant, p[h].preco);
+			}
+			fclose(estoque);
 		break;
+		
+		case 6:
+			printf("Saindo...\n");
+		break;
+		
 		default:
 			printf("O codigo digitado nao existe, tente outro codigo que esta na tabela\n");
 	}
-	}while(escolha != 5);
-
+	}while(escolha != 6);
+	
 	printf("O valor total deu %.2lf, qual sera a forma de pagamento?\n", valor);
 	printf("Opcoes\n");
 	printf("1- Pix\n");
