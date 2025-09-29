@@ -119,21 +119,28 @@ int main()
 		break;
 		
 		case 5:
-			estoque = fopen("estoque.txt", "w");
+			i = 0;
+			estoque = fopen("estoque.txt", "r");
 			printf("Qual produto deseja alterar a quantidade?, digite o codigo do produto\n");
-			scanf("%d", &p[i].codigo);
+			scanf("%d", &codigo);
 			printf("Digite a quantidade desejada\n");
-			scanf("%d", &p[i].quant);
+			scanf("%d", &quant);
 				while(fscanf(estoque, "%s\n%d\n%d\n%lf", p[i].nome, &p[i].codigo, &p[i].quant, &p[i].preco) != EOF)
 				{	
 					if(codigo == p[i].codigo)
 					{
 						p[i].quant = quant  ;
-						i++;
 					}
+					i++;
 				}
 			printf("Quantidade atualizada com sucesso!\n");
-		fclose(estoque);
+			fclose(estoque);
+			estoque = fopen("estoque.txt", "w");
+			for( int h = 0; h < i; h++)
+			{
+				fprintf(estoque, "%s\n%d\n%d\n%.2lf\n", p[h].nome, p[h].codigo, p[h].quant, p[h].preco);
+			}
+			fclose(estoque);
 		break;
 		
 		case 6:
