@@ -9,6 +9,8 @@ struct produto
 };
 	
 
+void BubbleSort (char * vet, int tam);
+
 int main()
 {
 	double valor = 0.0;
@@ -153,4 +155,22 @@ int main()
 	}while(escolha != 6);
 	
 	return(0);
+}
+void BubbleSort (char * vet, int tam)
+{
+	int aux = 0;
+	
+	for(int i = 0; i < tam; i++)
+	{
+		for(int k = 0; k < tam; k++)
+		{
+			if(vet[i] < vet[k])
+			{
+				aux = vet[i];
+				vet[i] = vet[k];
+				vet[k] = aux;
+			}
+		}
+	}
+	
 }
